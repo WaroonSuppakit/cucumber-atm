@@ -54,13 +54,25 @@ public class StepDefATM {
         assertThrows(NotEnoughBalanceException.class,
                 () -> atm.withdraw(amount));
     }
+
+    @When("I deposit {float} into ATM")
+    public void i_deposit_into_atm(double amount) throws NegativeAmountException {
+        atm.deposit(amount);
+    }
+
+    @When("I deposit a negative amount {float} into ATM")
+    public void I_deposited_a_negative_amount(double amount) throws NegativeAmountException {
+        assertThrows(NegativeAmountException.class,
+                () -> atm.deposit(amount));
+    }
+
     @Then("my account balance is {float}")
     public void my_account_balance_is(double balance) {
         assertEquals(balance, atm.getBalance());
     }
 
     @When("I transfer {float} to customer id {int}")
-    public void i_transfer_to_customer_id(double amount, int toId) throws NotEnoughBalanceException {
+    public void i_transfer_to_customer_id(double amount, int toId) throws Exception {
         atm.transfer(toId, amount);
     }
 
